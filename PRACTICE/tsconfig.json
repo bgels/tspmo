@@ -43,7 +43,7 @@
   "include": [
     "./**/*.ts",
     "./**/*.tsx"
-  ],
+, "practice.js"  ],
   "exclude": [
     "node_modules",
     "**/*.spec.ts",
