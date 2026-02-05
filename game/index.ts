@@ -10,8 +10,9 @@ interface StoryNode {
     choices: Choice[];
 }
 
+//add image property to the StoryNode interface and updated the AdventureGame class to target the #scene-image div
 //CLASS
-class AdventureGame {
+class Game {
     private storyNodes: StoryNode[];
     private currentId: number;
     
@@ -22,6 +23,7 @@ class AdventureGame {
         this.storyNodes = nodes;
         this.currentId = 1;
 
+        // Note the ! at the end (explained below)
         this.textElement = document.getElementById('story-text')!;
         this.choicesElement = document.getElementById('choices-container')!;
         
@@ -47,7 +49,7 @@ class AdventureGame {
         if (currentNode.choices.length === 0) {
             const endMessage = document.createElement('div');
             endMessage.innerText = "The End.";
-            endMessage.className = "text-center text-slate-400 italic mt-4";
+            endMessage.className = "text-center text-white mt-4 uppercase tracking-widest";
             this.choicesElement.appendChild(endMessage);
             return;
         }
@@ -56,7 +58,8 @@ class AdventureGame {
             const button = document.createElement('button');
             button.innerText = choice.text;
             
-            button.className = "w-full p-4 text-left bg-slate-700 hover:bg-slate-600 rounded-lg transition-colors border border-slate-600 shadow-md";
+            button.className = "w-full p-4 text-left bg-black text-white border-2 border-white hover:bg-white hover:text-black transition-colors";
+            
             button.onclick = () => {
                 this.makeChoice(choice.nextId);
             };
@@ -72,42 +75,41 @@ class AdventureGame {
 }
 
 //DATA
-const storyData: StoryNode[] = [
+const storyData = [
     {
         id: 1,
-        text: "You stand at the entrance of a dark, mossy cave. The air is cold and you hear water dripping.",
+        text: "omg u finally harvested ur first batch of oranges. they look so good ngl. but lowkey there is a hungry guy near the fence looking sad. wyd??",
         choices: [
-            { text: "Light a torch and enter.", nextId: 2 },
-            { text: "Walk away.", nextId: 3 },
+            { text: "sell them for the cash", nextId: 2 },
+            { text: "give him the oranges", nextId: 3 },
         ],
     },
     {
         id: 2,
-        text: "The torch illuminates a fork in the path. To the left, thick cobwebs block the way. To the right, you smell fresh air.",
+        text: "ok u sold them and ur kinda rich now do u wanna use the cash to buy the 'Mega-Farm 3000' expansion pack OR donate the cash to the shelter downtown?",
         choices: [
-            { text: "Cut through the cobwebs (Left).", nextId: 4 },
-            { text: "Follow the fresh air (Right).", nextId: 5 },
+            { text: "buy expansion pack 🚜", nextId: 4 },
+            { text: "donate to shelter (NOOO)", nextId: 5 },
         ],
     },
     {
         id: 3,
-        text: "You decide adventure isn't for you today. You go home to enjoy the afternoon sun.",
+        text: "u gave him the food and he was so happy 😭. u have $0 profit but honestly the vibes are immaculate. u win at life.",
         choices: [],
     },
     {
         id: 4,
-        text: "You walk into a giant spider web! The spider descends... You are stuck.",
+        text: "u bought the expansion and now u have 10000 acres of corns. ur rich but u have no friends and ur tired. suffering from success i guess.",
         choices: [],
     },
     {
         id: 5,
-        text: "You find a hidden exit that opens up onto a cliffside during the blue hour. It's beautiful. You win!",
+        text: "u donated the money!! the shelter is saved and they named a soup after u. ur farm is small but ur a local legend. massive W.",
         choices: [],
     },
-];
+] satisfies StoryNode[];
 
 // INITIALIZATION
-// Wait for the window to load before running, just to be safe
 window.onload = () => {
-    const game = new AdventureGame(storyData);
+    const game = new Game(storyData);
 };
